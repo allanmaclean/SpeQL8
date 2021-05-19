@@ -6,6 +6,9 @@ const {performance} = require('perf_hooks');
 require('dotenv').config();
 // const vizData = require('./src/datatest')
 // console.log(vizData);
+const metricsModule = require('./src/metrics');
+
+const queryTimes = metricsModule.queryTimes;
 
 // REDIS
 const Redis = require("ioredis");
@@ -13,12 +16,12 @@ const redis = new Redis();
 
 const services = [
   {
-    label: 'first',
+    label: 'SWAPI',
     db_uri: 'postgres://wkydcwrh:iLsy9WNRsMy_LVodJG9Uxs9PARNbiBLb@queenie.db.elephantsql.com:5432/wkydcwrh',
     port: 4000
   },
   {
-    label: 'second',
+    label: 'Users',
     db_uri: 'postgres://dgpvvmbt:JzsdBZGdpT1l5DfQz0hfz0iT7BrKgxhr@queenie.db.elephantsql.com:5432/dgpvvmbt',
     port: 4001
   },
@@ -57,6 +60,9 @@ const services = [
                 // console.log('operation: ' + requestContext.operation.operation);
                 //Log the tracing extension data of the response
                 const totalDuration = `${requestContext.response.extensions.tracing.duration} microseconds`;
+                console.log(`total duration is ${totalDuration}`);
+                queryTimes.push(Math.round(requestContext.response.extensions.tracing.duration / 10000000));
+                console.log(queryTimes);
                 const now = Date.now();
                 const hash = `${now}-${requestContext.queryHash}`
                 const timeStamp = new Date().toDateString();

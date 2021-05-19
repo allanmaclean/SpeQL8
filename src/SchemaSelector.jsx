@@ -5,7 +5,7 @@ const schemaDisplay = (props) => {
   const [currentSchema, changeCurrentSchema] = useState("");
   const [addSchema, addAnotherSchema] = useState([]);
   const [input, inputChange] = useState("");
-
+  
   const { fetchURL } = props;
   const { setFetchURL } = props;
 

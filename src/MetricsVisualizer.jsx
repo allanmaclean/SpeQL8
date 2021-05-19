@@ -1,7 +1,10 @@
 import React from 'react';
 import ColumnChart from './ColumnChart';
+const metricsModule = require('./metrics');
+const queryTimes = metricsModule.queryTimes;
 
-function MetricsVisualizer() {
+const MetricsVisualizer = (props) => {
+  
     return (
       <div>
       <div className='query-speed-box'>
